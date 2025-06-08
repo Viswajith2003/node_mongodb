@@ -8,6 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 const path = require("path");
+const Chat = require("./models/chat");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
 
@@ -19,4 +20,10 @@ async function main() {
 }
 
 app.listen(port, () => console.log("listening to port 3000.."));
- 
+
+//index route
+app.get("/chats", async (req, res) => {
+  let chats = await Chat.find();
+  console.log(chats);
+  res.render("view.ejs", { chats });
+});
